@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useMemo } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   LayoutDashboard, FlaskConical, Compass, Boxes, Database, Settings2,
   ChevronDown, Info, AlertTriangle, CheckCircle2, XCircle,
@@ -493,99 +493,49 @@ const FEATURE_COLUMNS = [
 ];
 
 const FEATURE_VALUES = {
-  "cmv-c1": { mhci_netmhcpan: 0.91, mhci_mhcflurry: 0.85, mhcii_iedb: 0.40, bcell_bepipred3_avg: 0.55, conservation_score: 0.94, accessibility_avg: 0.72, unpaired_cysteine_count: 0 },
-  "cmv-c2": { mhci_netmhcpan: 0.38, mhci_mhcflurry: 0.42, mhcii_iedb: 0.88, bcell_bepipred3_avg: 0.61, conservation_score: 0.88, accessibility_avg: null, unpaired_cysteine_count: 1 },
-  "cmv-c3": { mhci_netmhcpan: 0.30, mhci_mhcflurry: 0.28, mhcii_iedb: 0.35, bcell_bepipred3_avg: 0.83, conservation_score: 0.91, accessibility_avg: 0.81, unpaired_cysteine_count: 0 },
-  "cmv-c4": { mhci_netmhcpan: 0.74, mhci_mhcflurry: 0.70, mhcii_iedb: 0.20, bcell_bepipred3_avg: null, conservation_score: 0.72, accessibility_avg: 0.44, unpaired_cysteine_count: 2 },
-  "cmv-c5": { mhci_netmhcpan: 0.22, mhci_mhcflurry: 0.19, mhcii_iedb: 0.65, bcell_bepipred3_avg: 0.30, conservation_score: 0.58, accessibility_avg: 0.39, unpaired_cysteine_count: 0 },
-  "cmv-c6": { mhci_netmhcpan: 0.60, mhci_mhcflurry: 0.55, mhcii_iedb: 0.18, bcell_bepipred3_avg: 0.24, conservation_score: null, accessibility_avg: 0.29, unpaired_cysteine_count: 3 },
-  "cmv-c7": { mhci_netmhcpan: 0.52, mhci_mhcflurry: 0.49, mhcii_iedb: 0.44, bcell_bepipred3_avg: 0.40, conservation_score: 0.79, accessibility_avg: 0.51, unpaired_cysteine_count: 4 },
-
-  "ebv-c1": { mhci_netmhcpan: 0.86, mhci_mhcflurry: 0.80, mhcii_iedb: 0.33, bcell_bepipred3_avg: 0.48, conservation_score: 0.90, accessibility_avg: 0.69, unpaired_cysteine_count: 0 },
-  "ebv-c2": { mhci_netmhcpan: 0.34, mhci_mhcflurry: 0.31, mhcii_iedb: 0.82, bcell_bepipred3_avg: 0.57, conservation_score: 0.84, accessibility_avg: null, unpaired_cysteine_count: 1 },
-  "ebv-c3": { mhci_netmhcpan: 0.27, mhci_mhcflurry: 0.25, mhcii_iedb: 0.30, bcell_bepipred3_avg: 0.79, conservation_score: 0.88, accessibility_avg: 0.75, unpaired_cysteine_count: 0 },
-  "ebv-c4": { mhci_netmhcpan: 0.66, mhci_mhcflurry: 0.61, mhcii_iedb: 0.17, bcell_bepipred3_avg: null, conservation_score: 0.55, accessibility_avg: 0.33, unpaired_cysteine_count: 2 },
-  "ebv-c5": { mhci_netmhcpan: 0.47, mhci_mhcflurry: 0.44, mhcii_iedb: 0.39, bcell_bepipred3_avg: 0.36, conservation_score: 0.81, accessibility_avg: 0.46, unpaired_cysteine_count: 3 },
-
-  "bkpyv-c1": { mhci_netmhcpan: 0.55, mhci_mhcflurry: 0.50, mhcii_iedb: 0.21, bcell_bepipred3_avg: 0.29, conservation_score: 0.61, accessibility_avg: null, unpaired_cysteine_count: 1 },
-  "bkpyv-c2": { mhci_netmhcpan: 0.18, mhci_mhcflurry: 0.16, mhcii_iedb: 0.49, bcell_bepipred3_avg: null, conservation_score: 0.49, accessibility_avg: 0.28, unpaired_cysteine_count: 0 },
-  "bkpyv-c3": { mhci_netmhcpan: 0.14, mhci_mhcflurry: 0.12, mhcii_iedb: 0.19, bcell_bepipred3_avg: 0.44, conservation_score: 0.66, accessibility_avg: 0.52, unpaired_cysteine_count: 0 },
-  "bkpyv-c4": { mhci_netmhcpan: 0.39, mhci_mhcflurry: 0.35, mhcii_iedb: null, bcell_bepipred3_avg: 0.20, conservation_score: 0.38, accessibility_avg: 0.24, unpaired_cysteine_count: 1 },
-  "bkpyv-c5": { mhci_netmhcpan: 0.28, mhci_mhcflurry: 0.26, mhcii_iedb: 0.24, bcell_bepipred3_avg: 0.22, conservation_score: 0.58, accessibility_avg: 0.31, unpaired_cysteine_count: 2 },
+  c1: { mhci_netmhcpan: 0.91, mhci_mhcflurry: 0.85, mhcii_iedb: 0.40, bcell_bepipred3_avg: 0.55, conservation_score: 0.94, accessibility_avg: 0.72, unpaired_cysteine_count: 0 },
+  c2: { mhci_netmhcpan: 0.38, mhci_mhcflurry: 0.42, mhcii_iedb: 0.88, bcell_bepipred3_avg: 0.61, conservation_score: 0.88, accessibility_avg: null, unpaired_cysteine_count: 1 },
+  c3: { mhci_netmhcpan: 0.30, mhci_mhcflurry: 0.28, mhcii_iedb: 0.35, bcell_bepipred3_avg: 0.83, conservation_score: 0.91, accessibility_avg: 0.81, unpaired_cysteine_count: 0 },
+  c4: { mhci_netmhcpan: 0.74, mhci_mhcflurry: 0.70, mhcii_iedb: 0.20, bcell_bepipred3_avg: null, conservation_score: 0.72, accessibility_avg: 0.44, unpaired_cysteine_count: 2 },
+  c5: { mhci_netmhcpan: 0.22, mhci_mhcflurry: 0.19, mhcii_iedb: 0.65, bcell_bepipred3_avg: 0.30, conservation_score: 0.58, accessibility_avg: 0.39, unpaired_cysteine_count: 0 },
+  c6: { mhci_netmhcpan: 0.60, mhci_mhcflurry: 0.55, mhcii_iedb: 0.18, bcell_bepipred3_avg: 0.24, conservation_score: null, accessibility_avg: 0.29, unpaired_cysteine_count: 3 },
+  c7: { mhci_netmhcpan: 0.52, mhci_mhcflurry: 0.49, mhcii_iedb: 0.44, bcell_bepipred3_avg: 0.40, conservation_score: 0.79, accessibility_avg: 0.51, unpaired_cysteine_count: 4 },
 };
 
 const EVIDENCE_LINKS = {
-  "cmv-c1": [
+  c1: [
     { id: "e1", confidence: "exact", outcome: "positive", assay: "T cell assay – ELISPOT", mhc: "HLA-A*02:01", pmid: "18316" },
     { id: "e2", confidence: "exact", outcome: "positive", assay: "T cell assay – ICS", mhc: "HLA-A*02:01", pmid: "18316" },
     { id: "e3", confidence: "substring", outcome: "positive", assay: "MHC binding assay", mhc: "HLA-A*02:01", pmid: "22984" },
     { id: "e4", confidence: "substring", outcome: "positive", assay: "T cell assay – ELISPOT", mhc: "HLA-A*11:01", pmid: "30871" },
     { id: "e5", confidence: "same_protein_only", outcome: "negative", assay: "MHC binding assay", mhc: "HLA-B*07:02", pmid: "22984" },
   ],
-  "cmv-c2": [
+  c2: [
     { id: "e6", confidence: "substring", outcome: "positive", assay: "T cell assay – proliferation", mhc: "HLA-DRB1*07:01", pmid: "27110" },
     { id: "e7", confidence: "substring", outcome: "positive", assay: "MHC binding assay", mhc: "HLA-DRB1*07:01", pmid: "27110" },
   ],
-  "cmv-c3": [
+  c3: [
     { id: "e8", confidence: "exact", outcome: "positive", assay: "B cell assay – ELISA", mhc: null, pmid: "19004" },
     { id: "e9", confidence: "exact", outcome: "positive", assay: "B cell assay – Western blot", mhc: null, pmid: "19004" },
     { id: "e10", confidence: "exact", outcome: "positive", assay: "B cell assay – ELISA", mhc: null, pmid: "24455" },
   ],
-  "cmv-c4": [],
-  "cmv-c5": [
+  c4: [],
+  c5: [
     { id: "e11", confidence: "same_protein_only", outcome: "negative", assay: "T cell assay – ELISPOT", mhc: "HLA-DRB1*15:01", pmid: "20117" },
   ],
-  "cmv-c6": [
+  c6: [
     { id: "e12", confidence: "substring", outcome: "positive", assay: "MHC binding assay", mhc: "HLA-A*03:01", pmid: "21390" },
     { id: "e13", confidence: "same_protein_only", outcome: "negative", assay: "T cell assay – ELISPOT", mhc: "HLA-A*03:01", pmid: "21390" },
     { id: "e14", confidence: "same_protein_only", outcome: "negative", assay: "T cell assay – ICS", mhc: "HLA-A*24:02", pmid: "26602" },
   ],
-  "cmv-c7": [
+  c7: [
     { id: "e15", confidence: "exact", outcome: "positive", assay: "Neutralization assay", mhc: null, pmid: "18316" },
     { id: "e16", confidence: "exact", outcome: "positive", assay: "B cell assay – ELISA", mhc: null, pmid: "19004" },
-  ],
-
-  "ebv-c1": [
-    { id: "e20", confidence: "exact", outcome: "positive", assay: "T cell assay – ELISPOT", mhc: "HLA-A*02:01", pmid: "24001" },
-    { id: "e21", confidence: "exact", outcome: "positive", assay: "MHC binding assay", mhc: "HLA-A*02:01", pmid: "24001" },
-    { id: "e22", confidence: "substring", outcome: "positive", assay: "T cell assay – ICS", mhc: "HLA-A*11:01", pmid: "25560" },
-  ],
-  "ebv-c2": [
-    { id: "e23", confidence: "substring", outcome: "positive", assay: "T cell assay – proliferation", mhc: "HLA-DRB1*04:01", pmid: "19980" },
-    { id: "e24", confidence: "substring", outcome: "positive", assay: "MHC binding assay", mhc: "HLA-DRB1*04:01", pmid: "19980" },
-  ],
-  "ebv-c3": [
-    { id: "e25", confidence: "exact", outcome: "positive", assay: "B cell assay – ELISA", mhc: null, pmid: "22317" },
-    { id: "e26", confidence: "exact", outcome: "positive", assay: "Neutralization assay", mhc: null, pmid: "22317" },
-  ],
-  "ebv-c4": [
-    { id: "e27", confidence: "same_protein_only", outcome: "negative", assay: "T cell assay – ELISPOT", mhc: "HLA-B*08:01", pmid: "28844" },
-  ],
-  "ebv-c5": [
-    { id: "e28", confidence: "exact", outcome: "positive", assay: "Neutralization assay", mhc: null, pmid: "24001" },
-    { id: "e29", confidence: "exact", outcome: "positive", assay: "B cell assay – ELISA", mhc: null, pmid: "22317" },
-    { id: "e30", confidence: "substring", outcome: "positive", assay: "T cell assay – ELISPOT", mhc: "HLA-A*02:01", pmid: "25560" },
-    { id: "e31", confidence: "same_protein_only", outcome: "negative", assay: "MHC binding assay", mhc: "HLA-B*08:01", pmid: "28844" },
-    { id: "e32", confidence: "same_protein_only", outcome: "negative", assay: "T cell assay – ICS", mhc: "HLA-DRB1*04:01", pmid: "19980" },
-  ],
-
-  "bkpyv-c1": [
-    { id: "e40", confidence: "substring", outcome: "positive", assay: "MHC binding assay", mhc: "HLA-A*24:02", pmid: "27772" },
-    { id: "e41", confidence: "same_protein_only", outcome: "negative", assay: "T cell assay – ELISPOT", mhc: "HLA-A*24:02", pmid: "27772" },
-  ],
-  "bkpyv-c2": [],
-  "bkpyv-c3": [
-    { id: "e42", confidence: "same_protein_only", outcome: "negative", assay: "B cell assay – ELISA", mhc: null, pmid: "29011" },
-  ],
-  "bkpyv-c4": [],
-  "bkpyv-c5": [
-    { id: "e43", confidence: "same_protein_only", outcome: "negative", assay: "Neutralization assay", mhc: null, pmid: "29011" },
-    { id: "e44", confidence: "same_protein_only", outcome: "negative", assay: "T cell assay – ICS", mhc: "HLA-A*24:02", pmid: "27772" },
   ],
 };
 
 const EXPLANATIONS = {
-  "cmv-c1": {
+  c1: {
     topFeatures: [
       { name: "mhci_netmhcpan", contribution: 0.21, dir: "positive" },
       { name: "conservation_score", contribution: 0.18, dir: "positive" },
@@ -596,7 +546,7 @@ const EXPLANATIONS = {
     confidence: 0.90,
     limitations: ["شواهد آزمایشگاهی منفی نیز برای این کاندید یا اپی‌توپ‌های مرتبط با آن ثبت شده است."],
   },
-  "cmv-c2": {
+  c2: {
     topFeatures: [
       { name: "mhcii_iedb", contribution: 0.24, dir: "positive" },
       { name: "conservation_score", contribution: 0.16, dir: "positive" },
@@ -605,7 +555,7 @@ const EXPLANATIONS = {
     confidence: 0.71,
     limitations: ["یک یا چند فیچر مهم در امتیازدهی این کاندید در دسترس نبوده است (کیفیت ساختار)."],
   },
-  "cmv-c3": {
+  c3: {
     topFeatures: [
       { name: "bcell_bepipred3_avg", contribution: 0.27, dir: "positive" },
       { name: "conservation_score", contribution: 0.19, dir: "positive" },
@@ -614,7 +564,7 @@ const EXPLANATIONS = {
     confidence: 0.86,
     limitations: [],
   },
-  "cmv-c4": {
+  c4: {
     topFeatures: [
       { name: "mhci_netmhcpan", contribution: 0.19, dir: "positive" },
       { name: "unpaired_cysteine_count", contribution: -0.08, dir: "negative" },
@@ -626,7 +576,7 @@ const EXPLANATIONS = {
       "یک یا چند فیچر مهم در امتیازدهی این کاندید در دسترس نبوده است (میانگین BepiPred3).",
     ],
   },
-  "cmv-c5": {
+  c5: {
     topFeatures: [
       { name: "mhcii_iedb", contribution: 0.14, dir: "positive" },
       { name: "conservation_score", contribution: -0.09, dir: "negative" },
@@ -637,7 +587,7 @@ const EXPLANATIONS = {
       "شواهد آزمایشگاهی منفی نیز برای این کاندید یا اپی‌توپ‌های مرتبط با آن ثبت شده است.",
     ],
   },
-  "cmv-c6": {
+  c6: {
     topFeatures: [
       { name: "mhci_netmhcpan", contribution: 0.13, dir: "positive" },
       { name: "unpaired_cysteine_count", contribution: -0.12, dir: "negative" },
@@ -648,7 +598,7 @@ const EXPLANATIONS = {
       "یک یا چند فیچر مهم در امتیازدهی این کاندید در دسترس نبوده است (امتیاز حفاظت‌شدگی).",
     ],
   },
-  "cmv-c7": {
+  c7: {
     topFeatures: [
       { name: "conservation_score", contribution: 0.15, dir: "positive" },
       { name: "mhci_netmhcpan", contribution: 0.11, dir: "positive" },
@@ -656,108 +606,6 @@ const EXPLANATIONS = {
     ],
     confidence: 0.68,
     limitations: ["ساختار این پروتئین تجربی نیست؛ از یک مدل پیش‌بینی محاسباتی به‌دست آمده است."],
-  },
-
-  "ebv-c1": {
-    topFeatures: [
-      { name: "mhci_netmhcpan", contribution: 0.20, dir: "positive" },
-      { name: "conservation_score", contribution: 0.17, dir: "positive" },
-      { name: "mhci_mhcflurry", contribution: 0.13, dir: "positive" },
-    ],
-    confidence: 0.87,
-    limitations: [],
-  },
-  "ebv-c2": {
-    topFeatures: [
-      { name: "mhcii_iedb", contribution: 0.22, dir: "positive" },
-      { name: "conservation_score", contribution: 0.14, dir: "positive" },
-    ],
-    confidence: 0.69,
-    limitations: ["یک یا چند فیچر مهم در امتیازدهی این کاندید در دسترس نبوده است (دسترس‌پذیری سطحی)."],
-  },
-  "ebv-c3": {
-    topFeatures: [
-      { name: "bcell_bepipred3_avg", contribution: 0.25, dir: "positive" },
-      { name: "conservation_score", contribution: 0.18, dir: "positive" },
-    ],
-    confidence: 0.83,
-    limitations: [],
-  },
-  "ebv-c4": {
-    topFeatures: [
-      { name: "mhci_netmhcpan", contribution: 0.16, dir: "positive" },
-      { name: "conservation_score", contribution: -0.07, dir: "negative" },
-    ],
-    confidence: 0.46,
-    limitations: [
-      "شواهد آزمایشگاهی منفی نیز برای این کاندید یا اپی‌توپ‌های مرتبط با آن ثبت شده است.",
-      "یک یا چند فیچر مهم در امتیازدهی این کاندید در دسترس نبوده است (میانگین BepiPred3).",
-    ],
-  },
-  "ebv-c5": {
-    topFeatures: [
-      { name: "conservation_score", contribution: 0.13, dir: "positive" },
-      { name: "mhci_netmhcpan", contribution: 0.10, dir: "positive" },
-      { name: "unpaired_cysteine_count", contribution: -0.06, dir: "negative" },
-    ],
-    confidence: 0.62,
-    limitations: ["شواهد آزمایشگاهی منفی نیز برای این کاندید یا اپی‌توپ‌های مرتبط با آن ثبت شده است."],
-  },
-
-  "bkpyv-c1": {
-    topFeatures: [
-      { name: "mhci_netmhcpan", contribution: 0.11, dir: "positive" },
-      { name: "conservation_score", contribution: 0.09, dir: "positive" },
-    ],
-    confidence: 0.41,
-    limitations: [
-      "این رتبه‌بندی بر پایه‌ی وزن مساوی بین فیچرهاست، نه وزن یادگرفته‌شده از داده‌ی تجربی کافی (benchmark ناکافی برای این Case Study).",
-      "شواهد آزمایشگاهی منفی نیز برای این کاندید یا اپی‌توپ‌های مرتبط با آن ثبت شده است.",
-    ],
-  },
-  "bkpyv-c2": {
-    topFeatures: [
-      { name: "mhcii_iedb", contribution: 0.08, dir: "positive" },
-      { name: "conservation_score", contribution: -0.05, dir: "negative" },
-    ],
-    confidence: 0.33,
-    limitations: [
-      "این رتبه‌بندی بر پایه‌ی وزن مساوی بین فیچرهاست، نه وزن یادگرفته‌شده از داده‌ی تجربی کافی (benchmark ناکافی برای این Case Study).",
-      "یک یا چند فیچر مهم در امتیازدهی این کاندید در دسترس نبوده است (میانگین BepiPred3).",
-    ],
-  },
-  "bkpyv-c3": {
-    topFeatures: [
-      { name: "bcell_bepipred3_avg", contribution: 0.10, dir: "positive" },
-      { name: "conservation_score", contribution: 0.06, dir: "positive" },
-    ],
-    confidence: 0.36,
-    limitations: [
-      "این رتبه‌بندی بر پایه‌ی وزن مساوی بین فیچرهاست، نه وزن یادگرفته‌شده از داده‌ی تجربی کافی (benchmark ناکافی برای این Case Study).",
-      "شواهد آزمایشگاهی منفی نیز برای این کاندید یا اپی‌توپ‌های مرتبط با آن ثبت شده است.",
-    ],
-  },
-  "bkpyv-c4": {
-    topFeatures: [
-      { name: "mhci_netmhcpan", contribution: 0.07, dir: "positive" },
-      { name: "conservation_score", contribution: -0.08, dir: "negative" },
-    ],
-    confidence: 0.28,
-    limitations: [
-      "این رتبه‌بندی بر پایه‌ی وزن مساوی بین فیچرهاست، نه وزن یادگرفته‌شده از داده‌ی تجربی کافی (benchmark ناکافی برای این Case Study).",
-      "یک یا چند فیچر مهم در امتیازدهی این کاندید در دسترس نبوده است (MHC-II IEDB).",
-    ],
-  },
-  "bkpyv-c5": {
-    topFeatures: [
-      { name: "conservation_score", contribution: 0.09, dir: "positive" },
-      { name: "unpaired_cysteine_count", contribution: -0.07, dir: "negative" },
-    ],
-    confidence: 0.31,
-    limitations: [
-      "این رتبه‌بندی بر پایه‌ی وزن مساوی بین فیچرهاست، نه وزن یادگرفته‌شده از داده‌ی تجربی کافی (benchmark ناکافی برای این Case Study).",
-      "شواهد آزمایشگاهی منفی نیز برای این کاندید یا اپی‌توپ‌های مرتبط با آن ثبت شده است.",
-    ],
   },
 };
 
@@ -796,12 +644,6 @@ const VALIDATION_GATES = [
     ],
   },
 ];
-
-const PROJECT_RANKING_META = {
-  cmv: { runId: "RUN-1042", scenario: "بهینه‌سازی", model: "multi_criteria_logistic", fallback: false, note: "کالیبره‌شده روی ۴۷ کاندید Benchmark" },
-  ebv: { runId: "RUN-1039", scenario: "کشف", model: "multi_criteria_logistic", fallback: false, note: "کالیبره‌شده روی ۳۱ کاندید Benchmark" },
-  bkpyv: { runId: "RUN-1031", scenario: "بهینه‌سازی", model: "multi_criteria_equal_weight", fallback: true, note: "benchmark ناکافی (کمتر از ۲۰ نمونه‌ی مثبت+منفی) → equal_weight_fallback" },
-};
 
 const RUNS = [
   { id: "RUN-1042", project: "CMV", scenario: "OPTIMIZE", status: "COMPLETED_WITH_WARNINGS", started: "۱۴۰۵/۰۶/۰۶ ۰۹:۱۴", candidates: 3612 },
@@ -1187,194 +1029,7 @@ const NewAnalysisPage = ({ setPage, scenario, setScenario }) => {
   );
 };
 
-/* -------------------------------- Construct builder (طبق 15_DESIGN_PIPELINE بخش ۱۲.۱) -------------------------------- */
-
-const LINKER_OPTIONS = [
-  { id: "AAY", label: "AAY — برش پروتئازومی، رایج بین اپی‌توپ‌های MHC-I" },
-  { id: "GPGPG", label: "GPGPG — انعطاف‌پذیر، رایج برای MHC-II / چند-اپی‌توپی" },
-  { id: "none_direct_fusion", label: "بدون linker — اتصال مستقیم" },
-];
-const LINKER_SEQ = { AAY: "AAY", GPGPG: "GPGPG", none_direct_fusion: "" };
-const PURPOSE_TO_TYPE = { mhci_screen: "mhc_i", mhcii_screen: "mhc_ii", bcell_screen: "b_cell" };
-const TYPE_LABEL = { mhc_i: "MHC-I", mhc_ii: "MHC-II", b_cell: "سلول B" };
-
-function overlapRatio(seqA, seqB) {
-  const [shorter, longer] = seqA.length <= seqB.length ? [seqA, seqB] : [seqB, seqA];
-  if (!shorter) return 0;
-  return longer.includes(shorter) ? 1 : 0;
-}
-
-/** پیاده‌سازی JS همان الگوریتم greedy پایتونی build_construct در 15_DESIGN_PIPELINE بخش ۲۷. */
-function buildConstruct(pool, constraints, excludedIds) {
-  const eligible = pool.filter((c) =>
-    c.level === "پپتید" &&
-    c.conservation >= constraints.minConservation &&
-    ["exact", "substring"].includes(c.evidenceBest) &&
-    !excludedIds.has(c.id)
-  );
-  if (eligible.length === 0) {
-    return { epitopes: [], fullSequence: "", totalLength: 0, coverage: {}, eligibleCount: 0, error: "هیچ اپی‌توپی از فیلتر حفاظت‌شدگی/شواهد عبور نکرد (بخش ۱۹: هیچ construct ساخته نمی‌شود)." };
-  }
-
-  const sorted = [...eligible].sort((a, b) => b.score - a.score);
-  const dedup = [];
-  for (const cand of sorted) {
-    const overlaps = dedup.some((s) => s.protein === cand.protein && overlapRatio(cand.seq, s.seq) > 0.5);
-    if (!overlaps) dedup.push(cand);
-  }
-
-  const linker = LINKER_SEQ[constraints.linker];
-  const final = [];
-  let totalLen = 0;
-  for (const cand of dedup) {
-    if (final.length + 1 > constraints.maxEpitopes) break;
-    const addedLen = cand.seq.length + (final.length > 0 ? linker.length : 0);
-    if (totalLen + addedLen > constraints.maxTotalLength) break;
-    final.push(cand);
-    totalLen += addedLen;
-  }
-
-  if (final.length === 0) {
-    return { epitopes: [], fullSequence: "", totalLength: 0, coverage: {}, eligibleCount: eligible.length, error: "حداقل طول لازم برای یک اپی‌توپ + linker از max_total_length_aa بیشتر است." };
-  }
-
-  const fullSequence = final.map((e) => e.seq).join(linker);
-  const coverage = {};
-  final.forEach((e) => {
-    const t = PURPOSE_TO_TYPE[e.purpose] || "other";
-    coverage[t] = (coverage[t] || 0) + 1;
-  });
-
-  return { epitopes: final, fullSequence, totalLength: fullSequence.length, coverage, eligibleCount: eligible.length, error: null };
-}
-
-const DesignBuilder = ({ pool, setPage, startRun, setConstructPreview }) => {
-  const [constraints, setConstraints] = useState({ maxEpitopes: 6, maxTotalLength: 300, linker: "GPGPG", minConservation: 0.75 });
-  const [excludedIds, setExcludedIds] = useState(new Set());
-  const peptidePool = pool.filter((c) => c.level === "پپتید");
-
-  const toggleExclude = (id) => {
-    setExcludedIds((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id); else next.add(id);
-      return next;
-    });
-  };
-
-  const construct = useMemo(() => buildConstruct(pool, constraints, excludedIds), [pool, constraints, excludedIds]);
-
-  const setC = (key) => (e) => {
-    const v = e.target.type === "number" || e.target.type === "range" ? parseFloat(e.target.value) : e.target.value;
-    setConstraints((prev) => ({ ...prev, [key]: v }));
-  };
-
-  return (
-    <div>
-      <div className="vx-grid-2">
-        <div className="vx-card vx-card-pad">
-          <strong style={{ fontSize: 13.6, display: "block", marginBottom: 4 }}>استخر اپی‌توپ‌های واجد شرایط</strong>
-          <p style={{ fontSize: 11.8, color: "var(--ink-faint)", margin: "0 0 12px 0" }}>
-            از RUN-1042 · بهینه‌سازی · CMV — می‌توانی هرکدام را دستی از انتخاب خودکار خارج کنی (تیک را بردار).
-          </p>
-          {peptidePool.map((c) => {
-            const passesFilter = c.conservation >= constraints.minConservation && ["exact", "substring"].includes(c.evidenceBest);
-            const checked = passesFilter && !excludedIds.has(c.id);
-            return (
-              <label
-                key={c.id}
-                style={{
-                  display: "flex", alignItems: "center", gap: 10, padding: "8px 4px",
-                  borderBottom: "1px solid var(--line)", cursor: passesFilter ? "pointer" : "not-allowed",
-                  opacity: passesFilter ? 1 : 0.42,
-                }}
-              >
-                <input type="checkbox" checked={checked} disabled={!passesFilter} onChange={() => toggleExclude(c.id)} style={{ flexShrink: 0 }} />
-                <span className="vx-mono" style={{ fontSize: 11.6, width: 120, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{c.seq}</span>
-                <span style={{ fontSize: 11.6, flex: 1, color: "var(--ink-muted)" }}>{c.protein}</span>
-                <ConfPill level={c.evidenceBest} />
-                <span className="vx-mono" style={{ fontSize: 11.4, width: 38 }}>{(c.conservation * 100).toFixed(0)}٪</span>
-                {!passesFilter && <span style={{ fontSize: 10.6, color: "var(--ink-faint)" }}>زیر آستانه</span>}
-              </label>
-            );
-          })}
-        </div>
-
-        <div className="vx-card vx-card-pad">
-          <strong style={{ fontSize: 13.6, display: "block", marginBottom: 12 }}>محدودیت‌های Construct</strong>
-          <div style={{ display: "grid", gap: 12 }}>
-            <div>
-              <label style={{ fontSize: 11.8, color: "var(--ink-faint)", fontWeight: 700 }}>حداکثر تعداد اپی‌توپ: <span className="vx-mono">{constraints.maxEpitopes}</span></label>
-              <input type="range" min={1} max={8} step={1} value={constraints.maxEpitopes} onChange={setC("maxEpitopes")} style={{ width: "100%" }} />
-            </div>
-            <div>
-              <label style={{ fontSize: 11.8, color: "var(--ink-faint)", fontWeight: 700 }}>حداکثر طول کل (aa): <span className="vx-mono">{constraints.maxTotalLength}</span></label>
-              <input type="range" min={20} max={400} step={10} value={constraints.maxTotalLength} onChange={setC("maxTotalLength")} style={{ width: "100%" }} />
-            </div>
-            <div>
-              <label style={{ fontSize: 11.8, color: "var(--ink-faint)", fontWeight: 700 }}>حداقل حفاظت‌شدگی: <span className="vx-mono">{constraints.minConservation.toFixed(2)}</span></label>
-              <input type="range" min={0} max={1} step={0.05} value={constraints.minConservation} onChange={setC("minConservation")} style={{ width: "100%" }} />
-            </div>
-            <div>
-              <label style={{ fontSize: 11.8, color: "var(--ink-faint)", fontWeight: 700, display: "block", marginBottom: 4 }}>راهبرد Linker</label>
-              <select value={constraints.linker} onChange={setC("linker")} className="vx-card" style={{ width: "100%", padding: "8px 10px", fontSize: 12.4, border: "1px solid var(--line)" }}>
-                {LINKER_OPTIONS.map((l) => <option key={l.id} value={l.id}>{l.label}</option>)}
-              </select>
-            </div>
-          </div>
-
-          <div className="vx-hr" />
-          <strong style={{ fontSize: 13.6, display: "block", marginBottom: 10 }}>پیش‌نمایش زنده‌ی Construct</strong>
-
-          {construct.error ? (
-            <div className="vx-disclaimer" style={{ margin: 0 }}>
-              <AlertTriangle size={14} />
-              <span>{construct.error}</span>
-            </div>
-          ) : (
-            <>
-              <div className="vx-tag-row" style={{ marginBottom: 10 }}>
-                {construct.epitopes.map((e, i) => (
-                  <span key={e.id} className="vx-pill blue">#{i + 1} {TYPE_LABEL[PURPOSE_TO_TYPE[e.purpose]] || e.purpose}</span>
-                ))}
-              </div>
-              <div className="vx-seq" style={{ marginBottom: 10 }}>
-                {construct.fullSequence.split("").map((r, i) => (
-                  <span key={i} className={`vx-res ${RESIDUE_CLASS(r)}`}>{r}</span>
-                ))}
-              </div>
-              <div style={{ display: "flex", gap: 14, flexWrap: "wrap", fontSize: 12.3 }}>
-                <span>طول کل: <span className="vx-mono" style={{ fontWeight: 800 }}>{construct.totalLength}</span> / {constraints.maxTotalLength} aa</span>
-                <span>از {construct.eligibleCount} اپی‌توپ واجد شرایط</span>
-              </div>
-              <div className="vx-tag-row" style={{ marginTop: 10 }}>
-                {Object.entries(construct.coverage).map(([t, n]) => (
-                  <span key={t} className="vx-pill gray">{TYPE_LABEL[t] || t}: {n}</span>
-                ))}
-              </div>
-            </>
-          )}
-        </div>
-      </div>
-
-      <button
-        className="vx-btn primary"
-        style={{ marginTop: 16 }}
-        disabled={construct.epitopes.length === 0}
-        onClick={() => {
-          setConstructPreview({ ...construct, linker: constraints.linker });
-          startRun("DESIGN");
-          setPage("pipeline-run");
-        }}
-      >
-        <Play size={14} /> شروع اجرای طراحی
-      </button>
-    </div>
-  );
-};
-
-const ScenarioLandingPage = ({ scenario, setPage, startRun, setConstructPreview }) => {
-  const [blindAck, setBlindAck] = useState(false);
-
+const ScenarioLandingPage = ({ scenario, setPage, startRun }) => {
   const config = {
     OPTIMIZE: {
       icon: FlaskConical,
@@ -1419,63 +1074,30 @@ const ScenarioLandingPage = ({ scenario, setPage, startRun, setConstructPreview 
         </div>
       </div>
 
-      {scenario === "DESIGN" ? (
-        <DesignBuilder
-          pool={CANDIDATES.filter((c) => c.project === "cmv")}
-          setPage={setPage}
-          startRun={startRun}
-          setConstructPreview={setConstructPreview}
-        />
-      ) : (
-        <>
-          <div className="vx-card vx-card-pad" style={{ marginBottom: 16 }}>
-            <dl className="vx-kv">
-              <dt>پروژه</dt><dd>سیتومگالوویروس انسانی (CMV)</dd>
-              <dt>{config.inputLabel}</dt><dd>{config.inputValue}</dd>
-              {scenario === "OPTIMIZE" && <><dt>آلل‌های HLA هدف</dt><dd className="vx-mono">HLA-A*02:01, HLA-A*01:01, HLA-A*03:01</dd></>}
-            </dl>
-          </div>
+      <div className="vx-card vx-card-pad" style={{ marginBottom: 16 }}>
+        <dl className="vx-kv">
+          <dt>پروژه</dt><dd>سیتومگالوویروس انسانی (CMV)</dd>
+          <dt>{config.inputLabel}</dt><dd>{config.inputValue}</dd>
+          {scenario === "OPTIMIZE" && <><dt>آلل‌های HLA هدف</dt><dd className="vx-mono">HLA-A*02:01, HLA-A*01:01, HLA-A*03:01</dd></>}
+          {scenario === "DESIGN" && <><dt>محدودیت‌های construct</dt><dd>حداکثر ۶ اپی‌توپ · حداکثر ۳۰۰ residue · linker: GPGPG · حداقل حفاظت‌شدگی ۰.۷۵</dd></>}
+        </dl>
+      </div>
 
-          {scenario === "DISCOVER" && (
-            <>
-              <div className="vx-disclaimer">
-                <AlertTriangle size={14} />
-                <span>سناریوی Discover به‌صورت <strong>Blind</strong> اجرا می‌شود: نتایج بدون سرنخ دستی درباره‌ی این‌که کدام پروتئین‌ها آنتی‌ژن شناخته‌شده‌اند اولویت‌بندی می‌شوند.</span>
-              </div>
-              <label
-                style={{
-                  display: "flex", alignItems: "flex-start", gap: 9, cursor: "pointer",
-                  fontSize: 12.9, fontWeight: 700, marginBottom: 16, maxWidth: 640, lineHeight: 1.7,
-                }}
-              >
-                <input type="checkbox" checked={blindAck} onChange={(e) => setBlindAck(e.target.checked)} style={{ marginTop: 3, flexShrink: 0 }} />
-                <span>
-                  تأیید می‌کنم که این اجرا به‌صورت Blind انجام می‌شود و نتایج بدون هیچ سرنخ دستی درباره‌ی آنتی‌ژن‌های
-                  شناخته‌شده اولویت‌بندی خواهند شد. <span className="vx-mono" style={{ fontWeight: 500, color: "var(--ink-faint)" }}>(blind_mode_ack)</span>
-                </span>
-              </label>
-            </>
-          )}
-
-          <button
-            className="vx-btn primary"
-            disabled={scenario === "DISCOVER" && !blindAck}
-            onClick={() => { startRun(scenario); setPage("pipeline-run"); }}
-          >
-            <Play size={14} /> شروع اجرای {config.title}
-          </button>
-          {scenario === "DISCOVER" && !blindAck && (
-            <div style={{ fontSize: 11.5, color: "var(--ink-faint)", marginTop: 8 }}>
-              طبق بخش ۱۹ ماژول ۱۴: بدون تأیید blind_mode_ack، درخواست با خطای ۴۰۰ رد می‌شود — هیچ PipelineRun ساخته نمی‌شود.
-            </div>
-          )}
-        </>
+      {scenario === "DISCOVER" && (
+        <div className="vx-disclaimer">
+          <AlertTriangle size={14} />
+          <span>تأیید حالت Blind لازم است: نتایج بدون سرنخ دستی درباره‌ی آنتی‌ژن‌ها اولویت‌بندی خواهند شد.</span>
+        </div>
       )}
+
+      <button className="vx-btn primary" onClick={() => { startRun(scenario); setPage("pipeline-run"); }}>
+        <Play size={14} /> شروع اجرای {config.title}
+      </button>
     </div>
   );
 };
 
-const PipelineRunPage = ({ scenario, runStatus, runStepStates, elapsed, setPage, startRun, constructPreview }) => {
+const PipelineRunPage = ({ scenario, runStatus, runStepStates, elapsed, setPage, startRun }) => {
   const plan = PHASE_PLANS[scenario || "OPTIMIZE"];
   const stepStatus = (name) => runStepStates[name] || "pending";
 
@@ -1536,20 +1158,6 @@ const PipelineRunPage = ({ scenario, runStatus, runStepStates, elapsed, setPage,
         </div>
       ) : (
         <>
-          {scenario === "DESIGN" && constructPreview && !constructPreview.error && (
-            <div className="vx-card vx-card-pad" style={{ marginBottom: 18 }}>
-              <div style={{ fontSize: 11.6, color: "var(--ink-faint)", fontWeight: 800, marginBottom: 8 }}>Construct ساخته‌شده (خروجی واقعی الگوریتم greedy همین جلسه)</div>
-              <div className="vx-seq" style={{ marginBottom: 10 }}>
-                {constructPreview.fullSequence.split("").map((r, i) => (
-                  <span key={i} className={`vx-res ${RESIDUE_CLASS(r)}`}>{r}</span>
-                ))}
-              </div>
-              <div style={{ display: "flex", gap: 16, flexWrap: "wrap", fontSize: 12.3 }}>
-                <span>{constructPreview.epitopes.length} اپی‌توپ · طول کل <span className="vx-mono" style={{ fontWeight: 800 }}>{constructPreview.totalLength}</span> aa</span>
-                <span>linker: <span className="vx-mono">{constructPreview.linker}</span></span>
-              </div>
-            </div>
-          )}
           <div className="vx-phase">
             <div className="vx-phase-label"><Layers size={12} /> فاز ۱ — ترتیبی (Sequential)</div>
             <div className="vx-step-grid">{plan.phase1.map((n) => <Step key={n} name={n} />)}</div>
@@ -1575,14 +1183,11 @@ const PipelineRunPage = ({ scenario, runStatus, runStepStates, elapsed, setPage,
   );
 };
 
-const CandidatesPage = ({ setPage, setSelectedCandidateId, activeProject, setActiveProject }) => {
+const CandidatesPage = ({ setPage, setSelectedCandidateId, activeProject }) => {
   const [purposeFilter, setPurposeFilter] = useState("all");
   const [query, setQuery] = useState("");
 
-  const proj = PROJECTS.find((p) => p.id === activeProject);
-
   const filtered = CANDIDATES.filter((c) => {
-    if (c.project !== activeProject) return false;
     if (purposeFilter !== "all" && c.purpose !== purposeFilter) return false;
     if (query && !c.protein.toLowerCase().includes(query.toLowerCase()) && !c.seq.toLowerCase().includes(query.toLowerCase())) return false;
     return true;
@@ -1593,20 +1198,12 @@ const CandidatesPage = ({ setPage, setSelectedCandidateId, activeProject, setAct
       <div className="vx-page-head">
         <div>
           <h1 className="vx-page-title">کاندیدها</h1>
-          <p className="vx-page-sub">تمام کاندیدهای تولیدشده برای <strong>{proj?.name}</strong>، در همه‌ی سناریوها. سطح پپتید و پروتئین.</p>
+          <p className="vx-page-sub">تمام کاندیدهای تولیدشده برای این پروژه، در همه‌ی سناریوها. سطح پپتید و پروتئین.</p>
         </div>
       </div>
       <ScientificDisclaimer />
 
-      <div style={{ display: "flex", gap: 10, marginBottom: 14, alignItems: "center", flexWrap: "wrap" }}>
-        <select
-          value={activeProject}
-          onChange={(e) => setActiveProject(e.target.value)}
-          className="vx-card"
-          style={{ padding: "9px 10px", fontSize: 12.6, fontWeight: 700, border: "1px solid var(--line)", background: "var(--surface)", color: "var(--ink)" }}
-        >
-          {PROJECTS.map((p) => <option key={p.id} value={p.id}>{p.short} — {p.target}</option>)}
-        </select>
+      <div style={{ display: "flex", gap: 10, marginBottom: 14, alignItems: "center" }}>
         <div className="vx-card" style={{ display: "flex", alignItems: "center", padding: "0 10px", flex: "0 0 260px" }}>
           <Search size={14} color="var(--ink-faint)" />
           <input
@@ -1631,12 +1228,6 @@ const CandidatesPage = ({ setPage, setSelectedCandidateId, activeProject, setAct
         <span style={{ fontSize: 12.2, color: "var(--ink-faint)" }}>{filtered.length} کاندید</span>
       </div>
 
-      {filtered.length === 0 ? (
-        <div className="vx-card vx-empty">
-          <Dna size={24} />
-          <div>هیچ کاندیدی با این فیلترها برای {proj?.short} پیدا نشد.</div>
-        </div>
-      ) : (
       <div className="vx-card">
         <table className="vx-table">
           <thead>
@@ -1661,7 +1252,6 @@ const CandidatesPage = ({ setPage, setSelectedCandidateId, activeProject, setAct
           </tbody>
         </table>
       </div>
-      )}
     </div>
   );
 };
@@ -1921,37 +1511,18 @@ const EvidenceCardPage = ({ candidateId, setPage, liveEnabled }) => {
   );
 };
 
-const RankingPage = ({ setPage, setSelectedCandidateId, activeProject, setActiveProject }) => {
+const RankingPage = ({ setPage, setSelectedCandidateId }) => {
   const [openId, setOpenId] = useState(null);
-  const proj = PROJECTS.find((p) => p.id === activeProject);
-  const meta = PROJECT_RANKING_META[activeProject];
-  const sorted = CANDIDATES.filter((c) => c.project === activeProject).sort((a, b) => a.rank - b.rank);
+  const sorted = [...CANDIDATES].sort((a, b) => a.rank - b.rank);
   return (
     <div>
       <div className="vx-page-head">
         <div>
           <h1 className="vx-page-title">رتبه‌بندی</h1>
-          <p className="vx-page-sub">
-            Shortlist برای <span className="vx-mono">{meta.runId}</span> · {meta.scenario} · {proj?.short}. مدل: <span className="vx-mono">{meta.model}</span> ({meta.note}).
-          </p>
+          <p className="vx-page-sub">Shortlist برای RUN-1042 · بهینه‌سازی · CMV. مدل: multi_criteria_logistic (کالیبره‌شده روی ۴۷ کاندید Benchmark).</p>
         </div>
-        <select
-          value={activeProject}
-          onChange={(e) => setActiveProject(e.target.value)}
-          className="vx-card"
-          style={{ padding: "9px 10px", fontSize: 12.6, fontWeight: 700, border: "1px solid var(--line)", background: "var(--surface)", color: "var(--ink)" }}
-        >
-          {PROJECTS.map((p) => <option key={p.id} value={p.id}>{p.short} — {p.target}</option>)}
-        </select>
       </div>
       <ScientificDisclaimer />
-
-      {meta.fallback && (
-        <div className="vx-disclaimer">
-          <AlertTriangle size={14} />
-          <span>این رتبه‌بندی بر پایه‌ی <strong>وزن مساوی بین فیچرها</strong> است، نه وزن یادگرفته‌شده از داده‌ی تجربی کافی — {meta.note}.</span>
-        </div>
-      )}
 
       <div className="vx-card">
         {sorted.map((c) => {
@@ -2006,24 +1577,13 @@ const RankingPage = ({ setPage, setSelectedCandidateId, activeProject, setActive
   );
 };
 
-const FeatureMatrixPage = ({ setPage, setSelectedCandidateId, activeProject, setActiveProject }) => {
-  const proj = PROJECTS.find((p) => p.id === activeProject);
-  const rows = CANDIDATES.filter((c) => c.project === activeProject).sort((a, b) => a.rank - b.rank);
-  return (
+const FeatureMatrixPage = ({ setPage, setSelectedCandidateId }) => (
   <div>
     <div className="vx-page-head">
       <div>
         <h1 className="vx-page-title">ماتریس فیچر</h1>
-        <p className="vx-page-sub">مقادیر خام فیچر به‌ازای هر کاندید در <strong>{proj?.short}</strong>. سلول‌های هاشورخورده یعنی مقدار برای آن کاندید در دسترس نبوده، نه صفر.</p>
+        <p className="vx-page-sub">مقادیر خام فیچر به‌ازای هر کاندید. سلول‌های هاشورخورده یعنی مقدار برای آن کاندید در دسترس نبوده، نه صفر.</p>
       </div>
-      <select
-        value={activeProject}
-        onChange={(e) => setActiveProject(e.target.value)}
-        className="vx-card"
-        style={{ padding: "9px 10px", fontSize: 12.6, fontWeight: 700, border: "1px solid var(--line)", background: "var(--surface)", color: "var(--ink)" }}
-      >
-        {PROJECTS.map((p) => <option key={p.id} value={p.id}>{p.short} — {p.target}</option>)}
-      </select>
     </div>
     <ScientificDisclaimer />
     <div className="vx-card" style={{ overflowX: "auto" }}>
@@ -2035,7 +1595,7 @@ const FeatureMatrixPage = ({ setPage, setSelectedCandidateId, activeProject, set
           </tr>
         </thead>
         <tbody>
-          {rows.map((c) => (
+          {CANDIDATES.map((c) => (
             <tr key={c.id} className="clickable" onClick={() => { setSelectedCandidateId(c.id); setPage("candidate-detail"); }}>
               <td>
                 <div className="vx-mono" style={{ fontWeight: 800, fontSize: 12.2 }}>{c.id.toUpperCase()}</div>
@@ -2054,8 +1614,7 @@ const FeatureMatrixPage = ({ setPage, setSelectedCandidateId, activeProject, set
       </table>
     </div>
   </div>
-  );
-};
+);
 
 const ValidationPage = () => (
   <div>
@@ -2213,7 +1772,7 @@ export default function VaxAIPrototype() {
   const [page, setPage] = useState("dashboard");
   const [activeProject, setActiveProject] = useState("cmv");
   const [scenario, setScenario] = useState(null);
-  const [selectedCandidateId, setSelectedCandidateId] = useState("cmv-c1");
+  const [selectedCandidateId, setSelectedCandidateId] = useState("c1");
 
   const [runStatus, setRunStatus] = useState("idle");
   const [runStepStates, setRunStepStates] = useState({});
@@ -2221,7 +1780,6 @@ export default function VaxAIPrototype() {
   const timerRef = useRef(null);
   const elapsedRef = useRef(null);
   const [liveEnabled, setLiveEnabled] = useState(true);
-  const [constructPreview, setConstructPreview] = useState(null);
 
   const startRun = (sc) => {
     setScenario(sc);
@@ -2284,19 +1842,19 @@ export default function VaxAIPrototype() {
       content = <NewAnalysisPage setPage={setPage} scenario={scenario} setScenario={setScenario} />;
       break;
     case "optimize":
-      content = <ScenarioLandingPage key="OPTIMIZE" scenario="OPTIMIZE" setPage={setPage} startRun={startRun} setConstructPreview={setConstructPreview} />;
+      content = <ScenarioLandingPage scenario="OPTIMIZE" setPage={setPage} startRun={startRun} />;
       break;
     case "discover":
-      content = <ScenarioLandingPage key="DISCOVER" scenario="DISCOVER" setPage={setPage} startRun={startRun} setConstructPreview={setConstructPreview} />;
+      content = <ScenarioLandingPage scenario="DISCOVER" setPage={setPage} startRun={startRun} />;
       break;
     case "design":
-      content = <ScenarioLandingPage key="DESIGN" scenario="DESIGN" setPage={setPage} startRun={startRun} setConstructPreview={setConstructPreview} />;
+      content = <ScenarioLandingPage scenario="DESIGN" setPage={setPage} startRun={startRun} />;
       break;
     case "pipeline-run":
-      content = <PipelineRunPage scenario={scenario} runStatus={runStatus} runStepStates={runStepStates} elapsed={elapsed} setPage={setPage} startRun={startRun} constructPreview={constructPreview} />;
+      content = <PipelineRunPage scenario={scenario} runStatus={runStatus} runStepStates={runStepStates} elapsed={elapsed} setPage={setPage} startRun={startRun} />;
       break;
     case "candidates":
-      content = <CandidatesPage setPage={setPage} setSelectedCandidateId={setSelectedCandidateId} activeProject={activeProject} setActiveProject={setActiveProject} />;
+      content = <CandidatesPage setPage={setPage} setSelectedCandidateId={setSelectedCandidateId} activeProject={activeProject} />;
       break;
     case "candidate-detail":
       content = <CandidateDetailPage candidateId={selectedCandidateId} setPage={setPage} liveEnabled={liveEnabled} />;
@@ -2305,10 +1863,10 @@ export default function VaxAIPrototype() {
       content = <EvidenceCardPage candidateId={selectedCandidateId} setPage={setPage} liveEnabled={liveEnabled} />;
       break;
     case "ranking":
-      content = <RankingPage setPage={setPage} setSelectedCandidateId={setSelectedCandidateId} activeProject={activeProject} setActiveProject={setActiveProject} />;
+      content = <RankingPage setPage={setPage} setSelectedCandidateId={setSelectedCandidateId} />;
       break;
     case "feature-matrix":
-      content = <FeatureMatrixPage setPage={setPage} setSelectedCandidateId={setSelectedCandidateId} activeProject={activeProject} setActiveProject={setActiveProject} />;
+      content = <FeatureMatrixPage setPage={setPage} setSelectedCandidateId={setSelectedCandidateId} />;
       break;
     case "validation":
       content = <ValidationPage />;
